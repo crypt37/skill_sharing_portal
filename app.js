@@ -385,14 +385,14 @@ app.get("/logout", function (req, res) {
 });
 
 
-app.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
-
-//
-// app.listen(process.env.PORT ||3489, function () {
-//     console.log("listening");
+// app.listen(port, hostname, () => {
+//     console.log(`Server running at http://${hostname}:${port}/`);
 // });
+
+
+app.listen(process.env.PORT ||3489, function () {
+    console.log("listening");
+});
 
 app.post('/data', userExists, (req, res, next) => {
     console.log("inside data");
