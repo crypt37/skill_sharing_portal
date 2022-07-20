@@ -11,7 +11,7 @@ var session = require('express-session');
 const {connect} = require("mongoose");
 var MySQLStore = require('express-mysql-session')(session);
 
-const hostname = '127.0.0.60';
+const hostname = '127.0.0.63';
 const port = 2000;
 /*Mysql Express Session*/
 
@@ -23,7 +23,7 @@ app.use(session({
         user: "nekodesu",
         port:3306,
         database: "skill_sharing_po",
-        password: 'FYLRyCaDkUwDR54'
+        password: 'AnzXTxi6QXU6UMz'
 
     }),
     resave: false,
@@ -46,19 +46,21 @@ app.set("view engine", "ejs");
 
 /*Mysql Connection*/
 
+
+
 var connection = mysql.createConnection({
     host: "db4free.net",
     user: "nekodesu",
     port:3306,
     database: "skill_sharing_po",
-    password: 'FYLRyCaDkUwDR54',
+    password: 'AnzXTxi6QXU6UMz',
     multipleStatements:true
 });
 connection.connect((err) => {
     if (!err) {
         console.log("Connected");
     } else {
-        console.log("Conection Failed");
+        console.log(err,"Conection Failed");
     }
 });
 
@@ -95,14 +97,13 @@ passport.use(strategy);
 
 passport.serializeUser((user, done) => {
     console.log("inside serialize");
-    console.log(user);
+
     done(null, user.id)
 
 });
 
 passport.serializeUser((user, done) => {
     console.log("inside serialize");
-    console.log(user);
     done(null, user.id)
 
 });
@@ -199,9 +200,6 @@ app.get('/register', (req, res, next) => {
 
 app.post('/register', userExists, (req, res, next) => {
 
-
-
-    console.log(req.body.expert);
     console.log(req.body);
     const username = req.body.email;
     const saltHash = genPassword(req.body.password);
@@ -210,18 +208,21 @@ app.post('/register', userExists, (req, res, next) => {
     const hash = saltHash.hash;
     const language_expert = req.body.expert;
     const lang_noob= req.body.noob;
-    const   lang_intermediate= req.body.intermediate;
+    const  language_intermediate= req.body.intermdiate;
+
+
     const image = req.body.image;
+    let sid ;
 
 
-    connection.query('Insert into students(std_email,hash,salt,gender,std_name,std_image) values(?,?,?,?,?,?) ',
-        [req.body.email, hash, salt,req.body.gender,req.body.username,req.body.image], function (error, results, fields) {
+    connection.query('Insert into students(std_email,hash,salt,gender,std_name,std_image,std_about) values(?,?,?,?,?,?,?) ',
+        [req.body.email, hash, salt,req.body.gender,req.body.username,req.body.image,req.body.About], function (error, results, fields) {
         if (error) {
             console.log(error);
             console.log("Error ga okumaishita desu ");
         } else {
 
-            console.log("Successfully Entered");
+            console.log("Successfully Entered into students column ");
         }
 
     });
@@ -230,51 +231,85 @@ app.post('/register', userExists, (req, res, next) => {
     {
         if (error) {
             console.log("user  not found on sid search  ");
-        } else if (results.length > 0)
-        {
-            const sid=results[0].sid;
-            console.log("inside sid " , sid);
+        } else if (results.length > 0) {
+            sid = results[0].sid;
+            console.log("inside sid ", sid);
+        }
+        });
 
+if (Array.isArray(language_expert))
+{
+    language_expert.forEach(function (lang){
+        insert_into(lang,'Expert');
+    });
+}
+else {
+    insert_into(language_expert,'Expert');
+        }
 
-                language_expert.forEach(function (lang_name)
-                    {
-                    const  skill_level='expert';
-
-
-                                        connection.query('Select * from skill_reference  where skl_name=? ', [lang_name], function (error, results, fields) {
-                                      if (error)
-                                      {
-                                            console.log("skill  not found on  references ");
-                                        }
-                                              else if (results.length > 0)
-                                            {
-                                                const ref_id = results[0].ref_id;
-                                                console.log("ref id ",ref_id);
-                                                  connection.query('Insert into skills (sid,ref_id,skl_level) values (?,?,?)', [sid, ref_id, skill_level], function (error, results, fields) {
-                                                      if (error) {
-                                                          console.log("Error  in skills ");
-                                                          console.log(error);
-
-                                                      } else {
-
-                                                          console.log("Successfully Entered into skills ");
-                                                      }
-                                                  });
-                                            }
-                                    });
+if (Array.isArray(language_intermediate))
+{
+    language_intermediate.forEach(function (lang){
+        insert_into(lang,'Intermediate');
+    });
+}
+else {
+    insert_into(language_intermediate,'Intermediate');
+        }
 
 
 
-                    });
-            lang_noob.forEach(function (lang_name)
+                function insert_into (lang_name,level )
             {
-                const  skill_level='noob';
-
 
                 connection.query('Select * from skill_reference  where skl_name=? ', [lang_name], function (error, results, fields) {
                     if (error)
                     {
                         console.log("skill  not found on  references ");
+                    }
+                    else if (results.length > 0)
+                    {
+                        const ref_id = results[0].ref_id;
+                        console.log("ref id ",ref_id);
+                        connection.query('Insert into skills (sid,ref_id,skl_level) values (?,?,?)', [sid, ref_id, level], function (error, results, fields) {
+                            if (error) {
+                                console.log("Error  in skills ");
+                                console.log(error);
+
+                            } else {
+
+                                console.log("Successfully Entered into skills ");
+                            }
+                        });
+                    }
+                });
+
+
+
+            }
+
+
+
+
+
+    if (Array.isArray(lang_noob))
+    {    lang_noob.forEach(function (noob)
+    {
+        noob_insert(noob);
+
+    }) ;
+    }
+    else {
+        noob_insert(lang_noob);
+    }
+
+
+            function noob_insert (lang_name)
+            {
+                connection.query('Select * from skill_reference  where skl_name=? ', [lang_name], function (error, results, fields) {
+                    if (error)
+                    {
+                        console.log(lang_name,"skill  not found on  references ");
                     }
                     else if (results.length > 0)
                     {
@@ -295,12 +330,11 @@ app.post('/register', userExists, (req, res, next) => {
 
 
 
-            });
+            }
 
 
 
-        }
-    });
+
 
 
 
@@ -351,14 +385,14 @@ app.get("/logout", function (req, res) {
 });
 
 
-// app.listen(port, hostname, () => {
-//     console.log(`Server running at http://${hostname}:${port}/`);
-// });
-
-
-app.listen(process.env.PORT ||3489, function () {
-    console.log("listening");
+app.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+//
+// app.listen(process.env.PORT ||3489, function () {
+//     console.log("listening");
+// });
 
 app.post('/data', userExists, (req, res, next) => {
     console.log("inside data");
@@ -368,13 +402,27 @@ app.post('/data', userExists, (req, res, next) => {
 });
 app.get("/data", function (req, res) {
     console.log('inside data ');
-    console.log(req.user);
+   let results=[];
+
+     connection.query('select skl_level, skl_name   from students INNER JOIN (skill_reference inner JOIN  skills ON skill_reference.ref_id=skills.ref_id) ON students.sid=skills.sid where students.sid=?',
+         [req.user.sid], function (error, results, fields)
+    {
+
+        results.forEach(function (lang){
+            console.log(lang.name);
+        });
+    });
+
+
+
 
     res.render('data', {
         username: req.user.std_name,
         gender: req.user.gender,
-        name: req.user.std_email,
-        image : req.user.std_image
+        email: req.user.std_email,
+        image : req.user.std_image,
+        About:req.user.std_about,
+        language:results
 
     });
 

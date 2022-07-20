@@ -1,42 +1,6 @@
-/**
- * GENERAL
- *
- * HEADER
- * - header-classic
- * - header-bimg
- * - header-bname
- * - header-min
- * - header-norm
- * - header-binfo
- *
- * CONTENT
- * - general
- * - portfolio
- *
- * FOOTER
- * - copyright
- * - contact
- *
- * ADDON
- *
- * VENDOR
- * - magnific-popup
- * - validation
- * - bootstrap
- * - google map
- * - easy-pie-chart
- *
- * PRELOAD
- *
- * FIX
- * - layout
- * - print
- */
-/*================================================================
-  #GENERAL
-  ================================================================*/
+
 body {
-    background-color: #FAFAFA;
+    background-color: #E8ECEF;
     background-attachment: fixed;
     font-family: 'Open Sans', sans-serif;
     height: 100%;
@@ -44,13 +8,9 @@ body {
 }
 
 a {
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: #757575;
+
+    text-decoration: none !important;
+
 }
 
 a:hover {
@@ -149,9 +109,15 @@ a:hover {
 /*================================================================
   #HEADER
   ================================================================*/
+
+
+
 #header h1,
 #header h2 {
     font-weight: 300;
+    position: relative;
+
+
 }
 
 #header > .cv-section {
@@ -401,7 +367,7 @@ a:hover {
   #HEADER - header-norm
   ================================================================*/
 .header-norm {
-    background-image: url(../media/bg/trianglify-gray.svg);
+
     padding-left: 60px;
     padding-right: 60px;
     margin-left: -15px;
@@ -547,54 +513,10 @@ a:hover {
     }
 }
 
-ul {
-    padding: 0;
-}
 
-li {
-    list-style: none;
-}
 
-li:before {
-    font-family: 'FontAwesome';
-    font-size: 7px;
-    content: "";
-    margin-right: 8px;
-    top: -2px;
-    position: relative;
-    color: #757575;
-}
 
-/*================================================================
-  #CONTENT - portfolio
-  ================================================================*/
-.portfolio .port-item {
-    display: block;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    height: 144px;
-    max-height: 144px;
-    margin-bottom: 12px;
-    border: 1px solid #FFF;
-    box-sizing: border-box;
-}
 
-.port-item {
-    overflow: hidden;
-}
-
-@media (max-width: 767px) {
-    .port-item {
-        width: 100% !important;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 767px) {
-    .port-item {
-        width: 50% !important;
-    }
-}
 
 /*================================================================
   #FOOTER - copyright
@@ -717,201 +639,12 @@ li:before {
     margin-bottom: 0;
 }
 
-/*================================================================
-  #ADDON
-  ================================================================*/
-.addon .addon-left {
-    left: 0;
-    border-bottom-right-radius: 2px;
-    border-top-right-radius: 2px;
-}
 
-.addon .addon-right {
-    right: 24px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-}
 
-.addon .settings-btn,
-.addon .contact-btn,
-.addon .to-top-btn,
-.addon .print-btn,
-.addon .download-btn {
-    background-color: #FFF;
-    text-align: center;
-    line-height: 48px;
-    font-size: 24px;
-    display: block;
-    width: 48px;
-    height: 48px;
-    color: #757575;
-    position: fixed;
-    display: none;
-}
-
-@media print {
-    .addon .settings-btn,
-    .addon .contact-btn,
-    .addon .to-top-btn,
-    .addon .print-btn,
-    .addon .download-btn {
-        display: none;
-    }
-}
-
-@media (min-width: 1200px) {
-    .addon .settings-btn,
-    .addon .contact-btn,
-    .addon .to-top-btn,
-    .addon .print-btn,
-    .addon .download-btn {
-        display: block;
-    }
-}
-
-.addon .contact-btn {
-    top: 192px;
-}
-
-.addon .to-top-btn {
-    bottom: 152px;
-}
-
-.addon .print-btn {
-    bottom: 100px;
-}
-
-.addon .download-btn {
-    bottom: 48px;
-}
-
-/*================================================================
-  #VENDOR - magnific-popup
-  ================================================================*/
-.mfp-wrap {
-    overflow-y: scroll !important;
-}
-
-.mp-caption {
-    cursor: -webkit-zoom-in;
-    cursor: -moz-zoom-in;
-    cursor: zoom-in;
-}
-
-.mfp-zoom {
-    display: block;
-    margin: 0 auto;
-}
-
-.mfp-title {
-    padding: 6px 0;
-}
-
-.mfp-with-zoom .mfp-container,
-.mfp-with-zoom.mfp-bg {
-    opacity: 0;
-    -webkit-backface-visibility: hidden;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-}
-
-.mfp-with-zoom.mfp-ready .mfp-container {
-    opacity: 1;
-}
-
-.mfp-with-zoom.mfp-ready.mfp-bg {
-    opacity: 0.8;
-}
-
-.mfp-with-zoom.mfp-removing.mfp-bg,
-.mfp-with-zoom.mfp-removing .mfp-container {
-    opacity: 0;
-}
-
-/*================================================================
-  #VENDOR - validation
-  ================================================================*/
-label.error-msg {
-    color: #D32F2F;
-    font-weight: normal;
-    margin-top: 12px;
-    padding-left: 4px;
-}
-
-/*================================================================
-  #VENDOR - bootstrap
-  ================================================================*/
-#form-error-modal,
-#form-success-modal {
-    display: none;
-}
-
-#form-error-modal .modal-content,
-#form-success-modal .modal-content {
-    border: none;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-}
-
-.modal-backdrop {
-    background: rgba(252, 252, 252, 0.9);
-}
-
-body.modal-open {
-    padding-right: 0 !important;
-}
-
-#form-success-alert,
-#form-error-alert {
-    border: none;
-    margin-top: 24px;
-    margin-bottom: 0px;
-}
 
 /*================================================================
   #VENDOR - google map
   ================================================================*/
-.gmap {
-    height: 353.33333333px;
-    background-color: #fcfcfc;
-}
-
-/*================================================================
-  #VENDOR - easy-pie-chart
-  ================================================================*/
-.pie-chart {
-    position: relative;
-    width: 110px;
-    height: 110px;
-    text-align: center;
-    margin: 0 auto;
-    margin-bottom: 24px;
-}
-
-@media (min-width: 992px) {
-    .pie-chart {
-        margin-bottom: 0;
-    }
-}
-
-.pie-chart .percent {
-    line-height: 110px;
-}
-
-.pie-chart .percent:after {
-    content: '%';
-}
-
-.pie-chart canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
 
 /*================================================================
   #PRELOAD (unused)
@@ -1098,11 +831,15 @@ body.modal-open {
     }
 }
 
+
+
+
 /*================================================================
   #FIX - print
   ================================================================*/
 @media print {
     a[href]:after {
+text-decoration: none !important;
         content: none !important;
     }
 
@@ -1115,4 +852,11 @@ body.modal-open {
     .cv-section {
         padding: 44px 0;
     }
+}
+.nav-section {
+    text-decoration: none !important;
+    font-size: 23px;
+}
+.text {
+    font-size: 20px;
 }
