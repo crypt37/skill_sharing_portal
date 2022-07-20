@@ -169,6 +169,8 @@ app.use((req, res, next) => {
 
 
 /*routes*/
+
+
 app.get("/", function (req, res) {
     res.render("home");
 });
@@ -383,8 +385,8 @@ app.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/");
 });
-
-
+//
+//
 // app.listen(port, hostname, () => {
 //     console.log(`Server running at http://${hostname}:${port}/`);
 // });
