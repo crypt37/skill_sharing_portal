@@ -1,0 +1,36 @@
+{
+  "name": "secrets---starting-code",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-mysql-session": "^2.1.8",
+    "express-session": "^1.17.3",
+    "hammer": "^0.0.5",
+    "md5": "^2.3.0",
+    "mongoose": "^5.13.1",
+    "mongoose-encryption": "^2.1.0",
+    "mssql": "^8.1.2",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.19",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.1.0"
+  },
+  "keywords": [],
+  "description": "",
+  "devDependencies": {
+    "@types/hammerjs": "^2.0.41",
+    "hammerjs": "^2.0.8"
+  }
+}
