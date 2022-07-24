@@ -408,12 +408,16 @@ app.get("/logout", function(req, res) {
 //     console.log(`Server running at http://${hostname}:${port}/`);
 // });
 
-
-var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
-var server_host = process.env.YOUR_HOST || '0.0.0.0';
-server.listen(server_port, server_host, function() {
-    console.log('Listening on port %d', server_port);
+app.listen(process.env.PORT ||3489, function () {
+    console.log("listening");
 });
+
+
+// var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
+// var server_host = process.env.YOUR_HOST || '0.0.0.0';
+// server.listen(server_port, server_host, function() {
+//     console.log('Listening on port %d', server_port);
+// });
 
 app.post('/data', userExists, (req, res, next) => {
     console.log("inside data");
