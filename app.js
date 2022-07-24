@@ -9,6 +9,9 @@ const mysql = require('mysql');
 const crypto = require('crypto');
 var session = require('express-session');
 const {connect} = require("mongoose");
+const conn = require("bcrypt/promises");
+const {promise} = require("bcrypt/promises");
+const async = require("async");
 var MySQLStore = require('express-mysql-session')(session);
 
 const hostname = '127.0.0.63';
@@ -23,7 +26,7 @@ app.use(session({
         user: "nekodesu",
         port:3306,
         database: "skill_sharing_po",
-        password: 'AnzXTxi6QXU6UMz'
+        password: 'Mfy4mkV5sMfCZhW'
 
     }),
     resave: false,
@@ -53,7 +56,7 @@ var connection = mysql.createConnection({
     user: "nekodesu",
     port:3306,
     database: "skill_sharing_po",
-    password: 'AnzXTxi6QXU6UMz',
+    password: 'Mfy4mkV5sMfCZhW',
     multipleStatements:true
 });
 connection.connect((err) => {
@@ -147,9 +150,9 @@ function isAuth(req, res, next) {
 
 
 function userExists(req, res, next) {
-    connection.query('Select * from students where std_email=? ', [req.body.email], function (error, results, fields) {
+    connection.query('Select * from students where sid=? ', [req.body.email], function (error, results, fields) {
         if (error) {
-            console.log("user exists error");
+            console.log(error,"user exists error");
         } else if (results.length > 0) {
             res.redirect('/userAlreadyExists')
         } else {
@@ -178,10 +181,22 @@ app.get("/", function (req, res) {
 app.get('/login', (req, res, next) => {
     res.render('login')
 });
-app.get('/logout', (req, res, next) => {
-    req.logout(); //delets the user from the session
-    res.redirect('/protected-route');
+app.get("/logout", (req, res) => {
+    req.logout(req.user, err => {
+        if(err) return next(err);
+        res.redirect("/");
+    });
 });
+
+app.get("/delete", (req, res) => {
+console.log("delete user " , req);
+  req.logout(req.user, err => {
+        if(err) return next(err);
+        res.redirect("/");
+    });
+});
+
+
 app.get('/login-success', (req, res, next) => {
     res.redirect('/data')
 });
@@ -258,12 +273,21 @@ if (Array.isArray(language_intermediate))
 else {
     insert_into(language_intermediate,'Intermediate');
         }
+    if (Array.isArray(lang_noob))
+    {    lang_noob.forEach(function (noob)
+    {
+        insert_into(noob,"Beginner");
+
+    }) ;
+    }
+    else {
+        insert_into(lang_noob,"Beginner");
+    }
 
 
 
                 function insert_into (lang_name,level )
             {
-
                 connection.query('Select * from skill_reference  where skl_name=? ', [lang_name], function (error, results, fields) {
                     if (error)
                     {
@@ -285,14 +309,7 @@ else {
                         });
                     }
                 });
-
-
-
             }
-
-
-
-
 
     if (Array.isArray(lang_noob))
     {    lang_noob.forEach(function (noob)
@@ -304,8 +321,6 @@ else {
     else {
         noob_insert(lang_noob);
     }
-
-
             function noob_insert (lang_name)
             {
                 connection.query('Select * from skill_reference  where skl_name=? ', [lang_name], function (error, results, fields) {
@@ -317,31 +332,19 @@ else {
                     {
                         const ref_id = results[0].ref_id;
                         console.log("ref id ",ref_id);
+                        console.log("inside sid ", sid);
                         connection.query('Insert into skill_wish  (sid,skl_id) values (?,?)', [sid, ref_id,], function (error, results, fields) {
                             if (error) {
                                 console.log("Error  in skill_wish ");
                                 console.log(error);
-
                             } else {
-
                                 console.log("Successfully Entered into skills_wish");
                             }
                         });
                     }
                 });
 
-
-
             }
-
-
-
-
-
-
-
-
-
     res.redirect('/login');
 });
 
@@ -385,16 +388,16 @@ app.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/");
 });
-//
-//
-// app.listen(port, hostname, () => {
-//     console.log(`Server running at http://${hostname}:${port}/`);
-// });
 
 
-app.listen(process.env.PORT ||3489, function () {
-    console.log("listening");
+app.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+
+// app.listen(process.env.PORT ||3489, function () {
+//     console.log("listening");
+// });
 
 app.post('/data', userExists, (req, res, next) => {
     console.log("inside data");
@@ -406,45 +409,86 @@ app.get("/data", function (req, res) {
     console.log('inside data ');
    let results=[];
 
-     connection.query('select skl_level, skl_name   from students INNER JOIN (skill_reference inner JOIN  skills ON skill_reference.ref_id=skills.ref_id) ON students.sid=skills.sid where students.sid=?',
-         [req.user.sid], function (error, results, fields)
+    connection.query('select distinct skl_name,skl_level  from (skills  join skill_wish on skills.sid = skill_wish.sid  ) join skill_reference on skills.ref_id=skill_reference.ref_id where skills.sid=?',
+         [req.user.sid], function (error, result, fields)
     {
+       results=result ;
+       console.log(results);
 
-        results.forEach(function (lang){
-            console.log(lang.name);
+        res.render('data', {
+            username: req.user.std_name,
+            gender: req.user.gender,
+            email: req.user.std_email,
+            image : req.user.std_image,
+            About:req.user.std_about,
+            language:results
+
         });
+        console.log("connection query " , results);
     });
 
+    console.log("results", results);
 
-
-
-    res.render('data', {
-        username: req.user.std_name,
-        gender: req.user.gender,
-        email: req.user.std_email,
-        image : req.user.std_image,
-        About:req.user.std_about,
-        language:results
-
-    });
 
 });
 app.get("/tin", function (req, res) {
     console.log("testing  tin  ");
-    connection.query('Select * from students where std_email!=? ', [req.user.std_email], function (error, results, fields)
-    {
-        if (error) {
-            console.log("no any users found   ");
-        } else if (results.length > 0) {
-            console.log(results);
-            res.render('tin', {
-             user_info:results
-            });
-        }
-});
+    connection.query('Select * from students where std_email!=? ',
+        [req.user.std_email], async function (error, results, fields) {
+            if (error) {
+                console.log("no any users found   ");
+            } else if (results.length > 0) {
 
 
 
+                let lang_namesee = function (object) {
+                    return new Promise(function (resolve, reject) {
+                        console.log(object );
+                        connection.query('select skl_name , skl_level from skill_reference join skills on skills.ref_id = skill_reference.ref_id where sid=?', [object],
+                            function (err, rows) {
+                            if (error)
+                            {  console.log(object , err , "query error "); }
+                             else  if (rows === undefined) {
+                                    reject(new Error("Error rows is undefined"));
+                                } else {
+                                    resolve(rows);
+                                    console.log(object, rows);
+
+                                }
+                            }
+                        )
+                    });
+
+                };
 
 
+                for ( object of results) {
+object.language=[];
+     console.log("this is object",object);
+                  let  language =await
+                    lang_namesee(object.sid);
+                    console.log(language);
+                    if (language.length)
+                    {language.forEach( function (lang){ object.language.push(lang);})
+
+                    }
+
+
+                }
+
+            }
+            for (object of results )
+            {
+                console.log(object);
+                console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+            }
+            res.render('tin',
+                {
+                    user_info: results,
+                    sid: req.user.sid
+
+                });
+
+
+        });
 });

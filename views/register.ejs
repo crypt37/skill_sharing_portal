@@ -13,8 +13,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css"/>
 </head>
 
 <body>
@@ -37,11 +38,11 @@
         <label for="password">Password:</label>
         <input type="password" name="password" placeholder="password" autocomplete="off" required>
 
-        <label>Age:</label>
-        <input type="radio" id="under_13" value="under_13" name="user_age"><label for="under_13" class="light">Under
-            13</label><br>
-        <input type="radio" id="over_13" value="over_13" name="user_age"><label for="over_13" class="light">13 or
-            Older</label>
+        <div ><label for="birth_date">Birth Date: </label>
+
+            <input type="text"  name="dob" id="birth_date" required /></div>
+        <div id="ages"  style=" padding-bottom: 0.3em"> </div>
+        <input type="hidden" name="age" id = 'age' placeholder="age" />
 
 
         <label for="gender"> Select you gender</label>
@@ -71,8 +72,8 @@
                     <option value="Angular">Angular</option>
                 </optgroup>
                 <optgroup label="Programming Languages">
-                    <option value="Java">Java</option>
-                    <option value="c#">C#</option>
+                    <option value="java">Java</option>
+                    <option value="csharp">C#</option>
                     <option value="Python">Python</option>
                 </optgroup>
                 <optgroup label="Databases">
@@ -94,8 +95,8 @@
                     <option value="Angular">Angular</option>
                 </optgroup>
                 <optgroup label="Programming Languages">
-                    <option value="Java">Java</option>
-                    <option value="c#">C#</option>
+                    <option value="java">Java</option>
+                    <option value="csharp">C#</option>
                     <option value="Python">Python</option>
                 </optgroup>
                 <optgroup label="Databases">
@@ -116,14 +117,14 @@
                     <option value="Angular">Angular</option>
                 </optgroup>
                 <optgroup label="Programming Languages">
-                    <option value="Java">Java</option>
-                    <option value="c#">C#</option>
+                    <option value="java">Java</option>
+                    <option value="csharp">C#</option>
                     <option value="Python">Python</option>
                 </optgroup>
                 <optgroup label="Databases">
                     <option value="MySql">MySQL</option>
                     <option value="Oracle">Oracle</option>
-                    <option value="MSSQL">MS SQL Server</option>
+
                 </optgroup>
             </select>
         </div>
@@ -136,12 +137,55 @@
 
 </form>
 <script>
-    $(document).ready(function () {
-        $('.dropdown-submenu a.test').on("click", function (e) {
-            $(this).next('ul').toggle();
-            e.stopPropagation();
-            e.preventDefault();
+    function checkDuplicates(){
+        var codes = $('select[class^="selectpicker"]').map(function(element){
+            window.alert;
+            return element.value;
+        })
+        var duplicates = codes.some(function(element, index, self){
+            return element && codes.indexOf(element) !== index;
         });
+        return duplicates;
+    }
+
+    function flagDuplicates(){
+        var inputs = $('select[class^="selectpicker"]').toArray();
+        var codes = inputs.map(function(element){
+            return element.value;
+        });
+        var duplicates = 0;
+        codes.forEach(function(element, index){
+            var duplicate = element && codes.indexOf(element) !== index;
+            if(duplicate){
+                alert(inputs[index].value+ "  is a duplicate item " );
+
+                inputs[index].value = false;
+                duplicates++
+            }
+        });
+        return duplicates;
+    }
+    $('select[class^="selectpicker"]').on("change", function(){
+
+        flagDuplicates();
+    });
+
+    function calculateAge(date)
+    {
+        const now = new Date();
+        const diff = Math.abs(now - date );
+        const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+        return age
+    }
+
+    var picker = new Pikaday({
+        field: document.getElementById('birth_date') ,
+        yearRange:[1900,2020],
+        onSelect: function(date) {
+            let age = calculateAge(date);
+            document.getElementById('ages').innerHTML = "age: "+age ;
+            document.getElementById("age").value = age;
+        }
     });
 </script>
 </body>

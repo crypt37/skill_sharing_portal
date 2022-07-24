@@ -4,7 +4,7 @@ var tinderContainer = document.querySelector('.tinder');
 var allCards = document.querySelectorAll('.tinder--card');
 var nope = document.getElementById('nope');
 var love = document.getElementById('love');
-
+console.log(allCards);
 function initCards(card, index) {
     var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
 
@@ -49,7 +49,7 @@ allCards.forEach(function (el) {
         var keep = Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
 
         event.target.classList.toggle('removed', !keep);
-
+console.log(event.target.outerText.substring(0,20));
         if (keep) {
             event.target.style.transform = '';
         } else {

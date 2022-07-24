@@ -15,9 +15,6 @@
 
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
-
 
 
     <title>your personal deatails </title>
@@ -45,29 +42,23 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a aria-current="page" class="nav-link active" href="/">Home</a>
+                        <a aria-current="page" class="nav-link active" href="/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/tin:Users">Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/tin:Teachers">Teachers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/tin:Learners">Learners</a>
+                        <a class="nav-link" href="/tin">Users</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                            id="navbarDropdown" role="button">
-                            Account
+                            Dropdown
                         </a>
                         <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/register">Change info</a></li>
-                            <li><a class="dropdown-item" href="/delete">Delete</a></li>
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="/logout" >logout</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
                     </li>
 
@@ -95,7 +86,6 @@
         <div class="col-md-9">
             <h1><%= username %></h1>
             <h2><%= About %></h2>
-            <p> age: <%= Age %></p>
         </div>
     </div>
     <div class="col-md-3 right">
@@ -119,24 +109,25 @@
 
 <div class="content cv-section hidden-print">
     <div class="col-md-3">
-        <h2>SKILLS</h2>
-    </div>   <div class="row cv-item col-md-push-9">
-        <div class="row list-title ">
-            <div class="col-md-2"> <h2> Languages </h2></div>
-            <div class=" col-md-10"> <h2> Level </h2></div>
-        </div>
-           <%  language.forEach(function (lang){   if (lang.skl_level === "Expert") {count=(Math.floor(Math.random() * 10 +90));} else if (lang.skl_level==='Intermediate') {count= (Math.floor(Math.random() * 20)+40);} else {count= Math.floor(Math.random() * 10);}  %>
-             <div class="col-md-2 item-list">
-               <h3 class ="item-text"><%=  lang.skl_name %> </h3>
-             </div>
-                    <div class="col-md-10 ">
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark " role="progressbar" aria-valuenow="<%= count %>" aria-valuemin="0" aria-valuemax="100" style="width:<%= count %>%"></div>
-                        </div>
-                 </div>
-        <% });%>
+        <h2>language</h2>
     </div>
-</div>
+            <div class="cv-item list">
+
+                <div class="col-md-7">
+                    <%  language.forEach(function (lang){   if (lang.skl_level === "Expert") {count=5} else if (lang.skl_level==='Intermediate') {count =3} else {count=1}   %>
+
+                             <div class="col-md-7">
+                                 <span >  <i class ="text"><%=  lang.skl_name %> </i> </span>
+
+                                 <%  for (let i=0;i<count ;i++) {%>
+                            <span><i class="fa fa-fw"></i></span>
+                          <% }%>
+                        </div>
+                    <%   }); %>
+            </div>
+
+                </div>
+                </div>
 <!-- .content - testimonial -->
 <div id="contact-section-second" class="content cv-section hidden-print">
     <div class="col-md-4">
