@@ -366,7 +366,7 @@ app.post('/login', passport.authenticate('local', {
     failureRedirect: '/login-failure',
     successRedirect: '/login-success'
 }));
-app.get ('/no_skills')
+
 
 app.get('/notAuthorized', (req, res, next) => {
     console.log("Inside get");
@@ -380,11 +380,7 @@ app.get('/userAlreadyExists', (req, res, next) => {
 
 });
 
-app.get('/no_skills ', (req, res, next) => {
 
-    res.send('<h1>Sorry  you don't have any skills   </h1><p><a href="/register"> resiter with some new learned skills  </a></p>');
-
-});
 
 app.post("/login", function(req, res) {
     const user = new User({
@@ -462,7 +458,7 @@ app.get("/tin:title", isAuth, async function(req, res) {
     let langs = async function(level, sid)
     {
         console.log(level, sid);
-        let str = "select  distinct skl_name  from skills join skill_reference sr on skills.ref_id = sr.ref_id where  skills.skl_level = " + level + " and  skills.sid = ?"
+        let str = "select  distinct skl_name  from skills join skill_reference sr on skills.ref_id = sr.ref_id     where skills.sid = ? and (  skills.skl_level = " + level + " )  "
         return new Promise(function(resolve, reject) {
             connection.query(str, [sid],
                 async function(error, results, fields) {
@@ -473,13 +469,8 @@ app.get("/tin:title", isAuth, async function(req, res) {
                         var result = results.map(d => `'${d.skl_name}'`).join('or sr.skl_name=');
 
                         console.log("result in langs " + sid + result.skl_name);
-                        if (!skill_name && req.params.title === ":Learners" )
-                        {
-
-                            res.redirect('/no_skills');
 
 
-                        }
                         resolve(result);
                     }
 
@@ -501,11 +492,8 @@ app.get("/tin:title", isAuth, async function(req, res) {
         lang_level = "'Beginner'"
         skill_name = await langs(lang_level, sid);
         console.log("returned results ", skill_name);
-        if (!skill_name)
-        {
-            res.redirect('/no_skills');
+        if (!skill_name ) return res.status(400).send('<h1>Sorry  you do not  have any skills   </h1><p><a href="/register"> resiter with some new learned skills  </a></p>');
 
-        }
 
         str = " select distinct students.std_name, students.sid, students.std_image, students.gender,students.age,students.std_about " +
             "from students inner join skills on students.sid=skills.sid " +
@@ -520,11 +508,8 @@ app.get("/tin:title", isAuth, async function(req, res) {
         lang_level = "'expert' or skills.skl_level='Intermediate'";
         skill_name = await langs(lang_level, sid);
         console.log("returned results ", skill_name);
-        if (!skill_name)
-        {
+        if (!skill_name ) return res.status(400).send('<h1>Sorry  you do not  have any skills   </h1><p><a href="/register"> resiter with some new learned skills  </a></p>');
 
-            res.redirect("/no_skills");
-        }
 
         str = " select distinct students.std_name, students.sid, students.std_image, students.gender,students.age,students.std_about " +
             "from students inner join skills on students.sid=skills.sid " +
