@@ -408,7 +408,7 @@ app.get("/logout", function(req, res) {
 //     console.log(`Server running at http://${hostname}:${port}/`);
 // });
 
-app.listen(process.env.PORT ||3489, function () {
+app.listen(process.env.PORT ||2000, function () {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 
@@ -454,7 +454,8 @@ app.get("/data", isAuth, function(req, res) {
 app.get("/tin:title", isAuth, async function(req, res) {
     console.log("testing  tin  ");
 
-    let langs = async function(level, sid) {
+    let langs = async function(level, sid)
+    {
         console.log(level, sid);
         let str = "select  distinct skl_name  from skills join skill_reference sr on skills.ref_id = sr.ref_id where  skills.skl_level = " + level + " and  skills.sid = ?"
         return new Promise(function(resolve, reject) {
@@ -467,6 +468,11 @@ app.get("/tin:title", isAuth, async function(req, res) {
                         var result = results.map(d => `'${d.skl_name}'`).join('or sr.skl_name=');
 
                         console.log("result in langs " + sid + result.skl_name);
+                        if (!skill_name && req.params.title === ":Learners" )
+                        {
+                            res.send('<h1>Please input some  skills first </h1><p><a href="/register">go to register </a></p>');
+
+                        }
                         resolve(result);
                     }
 
@@ -475,11 +481,12 @@ app.get("/tin:title", isAuth, async function(req, res) {
     }
 
 
-    let lang_level, skill_name;
+    let lang_level, skill_name='';
     let str;
     let sid = req.user.sid;
     console.log("req params ", req.params.title);
-    if (req.params.title === ":Users") {
+    if (req.params.title === ":Users")
+    {
         str = "select * from students where students.sid!=?"
     } else if (req.params.title === ":Teachers") {
 
@@ -487,7 +494,11 @@ app.get("/tin:title", isAuth, async function(req, res) {
         lang_level = "'Beginner'"
         skill_name = await langs(lang_level, sid);
         console.log("returned results ", skill_name);
+        if (!skill_name)
+        {
+            res.send('<h1>Please input some  skills first </h1><p><a href="/register">go to register </a></p>');
 
+        }
 
         str = " select distinct students.std_name, students.sid, students.std_image, students.gender,students.age,students.std_about " +
             "from students inner join skills on students.sid=skills.sid " +
@@ -502,7 +513,11 @@ app.get("/tin:title", isAuth, async function(req, res) {
         lang_level = "'expert' or skills.skl_level='Intermediate'";
         skill_name = await langs(lang_level, sid);
         console.log("returned results ", skill_name);
+        if (!skill_name)
+        {
+            res.send('<h1>Please input some  skills first </h1><p><a href="/register">go to register </a></p>');
 
+        }
 
         str = " select distinct students.std_name, students.sid, students.std_image, students.gender,students.age,students.std_about " +
             "from students inner join skills on students.sid=skills.sid " +
