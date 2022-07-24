@@ -470,7 +470,9 @@ app.get("/tin:title", isAuth, async function(req, res) {
                         console.log("result in langs " + sid + result.skl_name);
                         if (!skill_name && req.params.title === ":Learners" )
                         {
-                            res.send('<h1>Please input some  skills first </h1><p><a href="/register">go to register </a></p>');
+
+                            res.redirect('/data');
+
 
                         }
                         resolve(result);
@@ -496,7 +498,7 @@ app.get("/tin:title", isAuth, async function(req, res) {
         console.log("returned results ", skill_name);
         if (!skill_name)
         {
-            res.send('<h1>Please input some  skills first </h1><p><a href="/register">go to register </a></p>');
+            res.redirect('/data');
 
         }
 
@@ -516,7 +518,7 @@ app.get("/tin:title", isAuth, async function(req, res) {
         if (!skill_name)
         {
             res.send('<h1>Please input some  skills first </h1><p><a href="/register">go to register </a></p>');
-
+            res.redirect("/data");
         }
 
         str = " select distinct students.std_name, students.sid, students.std_image, students.gender,students.age,students.std_about " +
@@ -547,6 +549,7 @@ app.get("/tin:title", isAuth, async function(req, res) {
                         connection.query('select skl_name , skl_level from skill_reference join skills on skills.ref_id = skill_reference.ref_id where sid=?', [object],
                             function(err, rows) {
                                 if (error) {
+
                                     console.log(object, err, "query error ");
                                 } else if (rows === undefined) {
                                     reject(new Error("Error rows is undefined"));
