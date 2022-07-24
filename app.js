@@ -404,13 +404,13 @@ app.get("/logout", function(req, res) {
 });
 
 
-// app.listen(port, hostname, () => {
-//     console.log(`Server running at http://${hostname}:${port}/`);
-// });
-
-app.listen(process.env.PORT ||3489, function () {
-    console.log("listening");
+app.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+// app.listen(process.env.PORT ||3489,hostname, function () {
+//   console.log(`Server running at http://${hostname}:${port}/`);
+// });
 
 
 // var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
@@ -504,7 +504,7 @@ app.get("/tin:title", isAuth, async function(req, res) {
         console.log("returned results ", skill_name);
 
 
-        str = " select unique students.std_name, students.sid, students.std_image, students.gender,students.age,students.std_about " +
+        str = " select distinct students.std_name, students.sid, students.std_image, students.gender,students.age,students.std_about " +
             "from students inner join skills on students.sid=skills.sid " +
             "inner  join skill_wish  on students.sid = skill_wish.sid " +
             "inner join skill_reference sr on skills.ref_id = sr.ref_id " +
