@@ -517,7 +517,7 @@ app.get("/tin:title", isAuth, async function(req, res) {
         console.log("returned results ", skill_name);
         if (!skill_name)
         {
-            res.send('<h1>Please input some  skills first </h1><p><a href="/register">go to register </a></p>');
+
             res.redirect("/data");
         }
 
