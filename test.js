@@ -18,7 +18,7 @@ const {
 const async = require("async");
 var MySQLStore = require('express-mysql-session')(session);
 
-const hostname = '127.0.0.69';
+const hostname = '127.0.0.2';
 const port = 2000;
 /*Mysql Express Session*/
 
@@ -409,15 +409,13 @@ app.get("/logout", function(req, res) {
 // });
 
 
-app.listen(process.env.PORT ||3489, function () {
+app.listen(process.env.PORT ||5000, function () {
     console.log("listening");
 });
 
 app.post('/data', userExists, (req, res, next) => {
     console.log("inside data");
     console.log(req.body);
-
-
 });
 app.get("/data", isAuth, function(req, res) {
     console.log('inside data ');
