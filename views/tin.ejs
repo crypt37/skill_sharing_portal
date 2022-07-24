@@ -68,35 +68,36 @@
     </div>
 
     <div class="tinder--cards">
+
         <% user_info.forEach(function(user){   %>
-        <div class="tinder--card">
+        <div class="tinder--card  " id ='<%= user.sid%>'>
           <img class="avatar"  src="<%= user.std_image %>">
-            <h3>  <a class="link" href="/data:" > <%= user.std_name %> </a>
+            <h3>  <%= user.std_name %>
             , <%= user.age%>
             </h3>
+         <form type="hidden " id=" sid " name="<%= user.sid%> " ></form>
             <p> <%= user.gender %></p>
                 <p> <%= user.std_about %></p>
             <h3> skills </h3>
-
             <%let expert=[],beg =[],inter=[];  %>
-
-
             <% if (user.language) {  user.language.forEach(function(lang){  if (lang.skl_level === "Expert") {expert.push(lang.skl_name); }else if (lang.skl_level === "Intermediate")  {inter.push(lang.skl_name)}else {beg.push(lang.skl_name)   }})} %>
-
            <p> Expert:<%= expert.join(',') %></p>
             <p> Intermediate: <%= inter.join(',') %></p>
            <p> Beginner: <%= beg.join(',') %></p>
-
-
         </div>
-
         <% }) %>
+
     <div class="tinder--buttons">
         <button id="nope"><i class="fa fa-remove"></i></button>
         <button id="love"><i class="fa fa-heart"></i></button>
     </div>
+
 </div>
+<form style="hidden" > </form>
+
+
 <script type="text/javascript " src ="js/tin.js" >
+
 </script>
 
 <%- include('partials/footer') %>

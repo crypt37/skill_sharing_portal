@@ -495,7 +495,7 @@ app.get("/tin:title", isAuth, async function(req, res) {
         if (!skill_name ) return res.status(400).send('<h1>Sorry  you do not  have any skills   </h1><p><a href="/register"> resiter with some new learned skills  </a></p>');
 
 
-        str = " select distinct students.std_name, students.sid, students.std_image, students.gender,students.age,students.std_about " +
+        str = " select distinct   students.std_name, students.sid, students.std_image, students.gender,students.age,students.std_about " +
             "from students inner join skills on students.sid=skills.sid " +
             "inner  join skill_wish  on students.sid = skill_wish.sid " +
             "inner join skill_reference sr on skills.ref_id = sr.ref_id " +
@@ -520,10 +520,6 @@ app.get("/tin:title", isAuth, async function(req, res) {
             "and  ( sr.skl_name =" + skill_name + ")";
 
     }
-
-
-
-
     console.log("requested by ", req.user);
     connection.query(str,
         [sid], async function(error, results, fields) {

@@ -67,9 +67,27 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="/logout" >logout</a></li>
+
                         </ul>
+
+
                     </li>
+                    <li class="nav-item dropdown">
+                        <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                           id="navbarDropdown" role="button">
+                            WORKSHOP
+                        </a>
+                        <% if (language){ language.forEach(function (lang){   if (lang.skl_level === "Expert") {count=(Math.floor(Math.random() * 10 +90));} else if (lang.skl_level==='Intermediate') {count= (Math.floor(Math.random() * 20)+40);} else {count= Math.floor(Math.random() * 10);}  %>
+
+                        <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
+                            <li>
+                            <h3 class ="item-text"></h3>
+                            <li><a class="dropdown-item" href="/workshop:<%=  lang.skl_name %>" ><%=  lang.skl_name %> </a></li>
+
+                                <% })};%>
+
+                    </li>
+
 
                 </ul>
                 <form class="d-flex">
@@ -125,7 +143,7 @@
             <div class="col-md-2"> <h2> Languages </h2></div>
             <div class=" col-md-10"> <h2> Level </h2></div>
         </div>
-           <%  language.forEach(function (lang){   if (lang.skl_level === "Expert") {count=(Math.floor(Math.random() * 10 +90));} else if (lang.skl_level==='Intermediate') {count= (Math.floor(Math.random() * 20)+40);} else {count= Math.floor(Math.random() * 10);}  %>
+           <% if (language){ language.forEach(function (lang){   if (lang.skl_level === "Expert") {count=(Math.floor(Math.random() * 10 +90));} else if (lang.skl_level==='Intermediate') {count= (Math.floor(Math.random() * 20)+40);} else {count= Math.floor(Math.random() * 10);}  %>
              <div class="col-md-2 item-list">
                <h3 class ="item-text"><%=  lang.skl_name %> </h3>
              </div>
@@ -134,7 +152,7 @@
                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark " role="progressbar" aria-valuenow="<%= count %>" aria-valuemin="0" aria-valuemax="100" style="width:<%= count %>%"></div>
                         </div>
                  </div>
-        <% });%>
+        <% })};%>
     </div>
 </div>
 <!-- .content - testimonial -->

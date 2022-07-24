@@ -118,9 +118,9 @@ margin-bottom: 3px;
 }
 
 .tinder--buttons {
-    flex: 0 0 100px;
+    flex:  100px ;
     text-align: center;
-    padding-top: 30px;
+
     z-index:200;
     opacity: inherit;
 }
@@ -165,3 +165,4 @@ margin-left: auto;
 color:black;
 
 }
+
