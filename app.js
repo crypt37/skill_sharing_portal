@@ -404,13 +404,13 @@ app.get("/logout", function(req, res) {
 });
 
 
-app.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
-
-// app.listen(process.env.PORT ||3489,hostname, function () {
-//   console.log(`Server running at http://${hostname}:${port}/`);
+// app.listen(port, hostname, () => {
+//     console.log(`Server running at http://${hostname}:${port}/`);
 // });
+
+app.listen(process.env.PORT ||3489, function () {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
 
 
 // var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
