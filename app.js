@@ -366,7 +366,7 @@ app.post('/login', passport.authenticate('local', {
     failureRedirect: '/login-failure',
     successRedirect: '/login-success'
 }));
-
+app.get ('/no_skills')
 
 app.get('/notAuthorized', (req, res, next) => {
     console.log("Inside get");
@@ -380,6 +380,11 @@ app.get('/userAlreadyExists', (req, res, next) => {
 
 });
 
+app.get('/no_skills ', (req, res, next) => {
+
+    res.send('<h1>Sorry  you don't have any skills   </h1><p><a href="/register"> resiter with some new learned skills  </a></p>');
+
+});
 
 app.post("/login", function(req, res) {
     const user = new User({
@@ -471,7 +476,7 @@ app.get("/tin:title", isAuth, async function(req, res) {
                         if (!skill_name && req.params.title === ":Learners" )
                         {
 
-                            res.redirect('/data');
+                            res.redirect('/no_skills');
 
 
                         }
@@ -498,7 +503,7 @@ app.get("/tin:title", isAuth, async function(req, res) {
         console.log("returned results ", skill_name);
         if (!skill_name)
         {
-            res.redirect('/data');
+            res.redirect('/no_skills');
 
         }
 
@@ -518,7 +523,7 @@ app.get("/tin:title", isAuth, async function(req, res) {
         if (!skill_name)
         {
 
-            res.redirect("/data");
+            res.redirect("/no_skills");
         }
 
         str = " select distinct students.std_name, students.sid, students.std_image, students.gender,students.age,students.std_about " +
