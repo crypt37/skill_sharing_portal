@@ -101,6 +101,8 @@ cursor: not-allowed;
 }
 
 .tinder--card h3 {
+    text-transform: uppercase;
+
     margin-top: 32px;
     font-size: 32px;
     text-align: center !important;
@@ -145,21 +147,32 @@ margin-bottom: 3px;
 }
 
 .fa-heart {
-    color: #FFACE4;
+    color: black;
 }
 
 .fa-remove {
-    color: #FF0000;
+    color: black;
 }
 .avatar {
-    background: #222;
-    width: 340px;
+
+    width: 400px;
     height: 340px;
     display: block;
-    margin-top: 10px;
-margin-left: auto;
+    margin-top: 0.1px;
+    margin-left: auto;
     margin-right: auto;
+    background-image:  url(https://thumbs.dreamstime.com/z/user-icon-vector-laptop-computer-male-person-profile-avatar-business-online-communication-network-glyph-pictogram-106635260.jpg);
+    background-size: 400px;
+    border: none;
 }
+
+.avatar :after
+{
+
+}
+
+
+
 .link{
     text-decoration: none;
 color:black;

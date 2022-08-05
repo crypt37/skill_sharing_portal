@@ -9,6 +9,7 @@ body {
 }
 
 .secret-text {
+    font-family: "JetBrains Mono ExtraBold", ui-rounded;
     text-align: center;
     font-size: 2rem;
     color: #fff;

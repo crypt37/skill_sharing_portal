@@ -2,12 +2,101 @@
 
 var tinderContainer = document.querySelector('.tinder');
 var allCards = document.querySelectorAll('.tinder--card');
+let total_card=allCards;
 var nope = document.getElementById('nope');
 var love = document.getElementById('love');
-var data = [{ val:'', id:''} ];
-function initCards(card, index) {
+var data = [{ value:'', flag:''} ];
+let Header_param = document.getElementById('tin').value;
+console.log(Header_param);
+let arr=[]
+let count=0;
+let learn_flag=true;
+function initCards(card, index)
+{
+
     var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
-if (newCards.length===0) {alert('the end ')}
+if (document.querySelectorAll('.tinder--card').length < 10)
+{
+   if ((count ===4 || newCards.length===0) && Header_param!==":Users"  && Header_param!==':MoreUsers' && Header_param!==':Matches')
+   {
+      if ( count===4 )  alert(" learners quota filled  ");
+
+      if (newCards.length===0 && arr.length===0)
+      {
+           alert ('sorry no   learners meet your  criteria  ');
+           document.getElementById('tin_form').setAttribute('action','/data') ;
+          document.getElementById("tin_form").submit();
+          learn_flag=false ;
+       }
+
+      else {
+          document.getElementById('tin_form').setAttribute('action','/team') ;
+          document.getElementById('tin_form').setAttribute('method','post') ;
+          document.getElementById('val').setAttribute('value',JSON.stringify(arr)) ;
+          document.getElementById("tin_form").submit();
+          learn_flag=false;2
+      }
+
+
+   }
+
+    if (newCards.length===0 && Header_param===':Matches')
+    {
+
+        if ( count===0 )  alert("SoRrY but no one seems to have liked you ");
+
+        document.getElementById('tin_form').setAttribute('action','/tin:NoMoreUsers') ;
+        document.getElementById('val').setAttribute('value',JSON.stringify(arr)) ;
+        document.getElementById('sid').setAttribute('value',data.value) ;
+        document.getElementById("tin_form").submit();
+        learn_flag=false;
+
+    }
+
+
+}
+
+
+
+if (newCards.length ===0 && learn_flag )
+{
+
+
+
+let moreflag=false;
+if ((Header_param===':MoreUsers' || Header_param===":Users" )  && newCards.length===0 && arr.length===0 )
+{
+    alert("Seems like theres no more  users  left  ");
+
+           document.getElementById('tin_form').setAttribute('action','/data') ;
+           document.getElementById("tin_form").submit();
+
+moreflag=true;
+
+}
+if (moreflag ===  false)
+{
+    var r=confirm("do you want more cards");
+    if (r===true)
+    {
+
+        document.getElementById('tin_form').setAttribute('action','/tin:MoreUsers') ;
+        document.getElementById('val').setAttribute('value',JSON.stringify(arr)) ;
+        document.getElementById('sid').setAttribute('value',data.value) ;
+        document.getElementById("tin_form").submit();
+    }
+    else
+    {
+
+        document.getElementById('tin_form').setAttribute('action','/tin:NoMoreUsers') ;
+          document.getElementById('val').setAttribute('value',JSON.stringify(arr)) ;
+                document.getElementById('sid').setAttribute('value',data.value) ;
+        document.getElementById("tin_form").submit();
+    }
+}
+
+}
+
     newCards.forEach(function (card, index) {
         card.style.zIndex = allCards.length - index;
         card.style.transform = 'scale(' + (20 - index) / 20 + ') translateY(-' + 30 * index + 'px)';
@@ -59,7 +148,7 @@ allCards.forEach(function (el) {
         var keep = Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
 
         event.target.classList.toggle('removed', !keep);
-         console.log(event.target.id,flag)
+
         let value=event.target.id;
 
 
@@ -68,6 +157,14 @@ allCards.forEach(function (el) {
             flag:''
          }
 
+         data.value=value;
+         data.flag=flag;
+
+        if (flag === true) {
+            count = count + 1
+        }
+ arr.push(data);
+ console.log(arr);
 
 
         if (keep) {
@@ -96,7 +193,7 @@ function createButtonListener(love) {
 
         var card = cards[0];
 
-        console.log(card);
+
         card.classList.add('removed');
 
         if (love) {
@@ -117,3 +214,15 @@ var loveListener = createButtonListener(true);
 nope.addEventListener('click', nopeListener);
 love.addEventListener('click', loveListener);
 console.log(data);
+document.getElementById('message').addEventListener('click' , function ()
+{
+let  kek =   data.value;
+    console.log("pressed message for ",kek );
+
+    document.getElementById('tin_form').setAttribute('method','get') ;
+    document.getElementById('tin_form').setAttribute('action','/data') ;
+    document.getElementById('sid').setAttribute('value',data.value) ;
+    document.getElementById("tin_form").submit();
+})
+
+
