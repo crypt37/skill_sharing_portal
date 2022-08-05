@@ -50,25 +50,32 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/tin:Users">Users</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="/tin:Teachers">Teachers</a>
+                        <a class="nav-link" href="/tin:Matches">matches</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="/tin:Learners">Learners</a>
+                        <a class="nav-link" href="/Recommend">I'm feeling creative </a>
                     </li>
+
+
                     <li class="nav-item dropdown">
                         <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                            id="navbarDropdown" role="button">
                             Account
                         </a>
                         <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/register">Change info</a></li>
-                            <li><a class="dropdown-item" href="/delete">Delete</a></li>
+
+                            <li><a class="dropdown-item" href="/Delete">Delete</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-
+                                      <li><a class="dropdown-item" href="/change">change</a></li>
+                            <li><a class="dropdown-item" href="/logout">logout</a></li>
                         </ul>
+
+
 
 
                     </li>
@@ -77,23 +84,17 @@
                            id="navbarDropdown" role="button">
                             WORKSHOP
                         </a>
-                        <% if (language){ language.forEach(function (lang){   if (lang.skl_level === "Expert") {count=(Math.floor(Math.random() * 10 +90));} else if (lang.skl_level==='Intermediate') {count= (Math.floor(Math.random() * 20)+40);} else {count= Math.floor(Math.random() * 10);}  %>
-
                         <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
+                        <% if (language){ language.forEach(function (lang){   if (lang.skl_level !==  "Intermediate") { %>
                             <li>
                             <h3 class ="item-text"></h3>
                             <li><a class="dropdown-item" href="/workshop:<%=  lang.skl_name %>" ><%=  lang.skl_name %> </a></li>
-
-                                <% })};%>
-
+                            <% }})};%>
                     </li>
 
 
                 </ul>
-                <form class="d-flex">
-                    <input aria-label="Search" class="form-control me-2" placeholder="Search" type="search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+
             </div>
         </div>
     </nav>
@@ -118,7 +119,7 @@
     </div>
     <div class="col-md-3 right">
         <div class="social-box">
-            <a href="/tin" class="facebook-icon" target="_blank"><i class="fa fa-facebook"></i></a>
+            <a href="#" class="facebook-icon" target="_blank"><i class="fa fa-facebook"></i></a>
             <a href="#" class="twitter-icon" target="_blank"><i class="fa fa-twitter"></i></a>
             <a href="#" class="googleplus-icon" target="_blank"><i class="fa fa-google-plus"></i></a>
             <a href="#" class="linkedin-icon" target="_blank"><i class="fa fa-linkedin"></i></a>
@@ -127,8 +128,8 @@
         <div class="contact-info">
             <p>
                 Email: <a href="<%= email %>"><%= email %></a><br/>
-                Phone: <a href="tel:+611234567890">(123) 456-7890</a><br/>
-                Web: <a href="#">www.johndoesite.com</a>
+                Phone: <a href="tel:+611234567890">9814149140</a><br/>
+                Web: <a href="sill-sharing-portal.herokuapp.com/">sill-sharing-portal.herokuapp.com/</a>
             </p>
         </div>
     </div>

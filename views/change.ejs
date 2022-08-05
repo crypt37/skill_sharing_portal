@@ -21,7 +21,7 @@
 <body>
 
 
-<form action="/register" method="POST" class="requires-validation">
+<form action="/change" method="POST" class="requires-validation">
 
     <h1>Sign Up</h1>
 
@@ -30,100 +30,100 @@
         <legend><span class="number">1</span> Your basic info</legend>
 
         <label for="username">Name:</label>
-        <input type="text" name="username" placeholder="Full Name" required>
+        <input type="text" name="username" placeholder="Full Name" value="<%= username %>" required>
 
         <label for="email">Email:</label>
-        <input type="email" name="email" placeholder="E-mail Address" required>
+        <input type="email" name="email" placeholder="E-mail Address"  value=" <%= email %>"  required>
 
         <label for="password">Password:</label>
         <input type="password" name="password" placeholder="password" autocomplete="off"  minlength="5" required >
 
         <div ><label for="birth_date">Birth Date: </label>
 
-            <input type="text"  name="dob" id="birth_date" required /></div>
+            <input type="text"  name="dob" id="birth_date"  required /></div>
         <div id="ages"  style=" padding-bottom: 0.3em"> </div>
-        <input type="hidden" name="age" id = 'age' placeholder="age" />
+        <input type="hidden" name="age" id = 'age' placeholder="age" value="<%= Age%>" />
 
 
-        <label for="gender"> Select you gender</label>
+        <label for="gender" id ="gender"> Select you gender</label>
         <select name="gender">
-            <option value="none" selected>Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">other</option>
+            <option value="male" id="male">Male</option>
+            <option value="female" id="female">Female</option>
+            <option value="other" id="'other" >other</option>
         </select>
         <label for="image">image link:</label>
-        <input type="text" name="image" placeholder="image" >
+        <input type="text" name="image" placeholder="image"  value="<%= image%>" >
         <label for="name">A short descripttion about you  (max 50 ):</label>
 
         <input type="text" id="About" name="About" required
-               minlength="1" maxlength="50" size="10">
+               minlength="1" maxlength="50" size="10"  value="<%= About %>">
 
         <div class="col-md-12 mt-3">
             <legend><span class="number">2</span>  your skill details :</legend>
             <h5> you are Expert on :</h5>
-            <select class="selectpicker" multiple data-live-search="true" name="expert" required >
+            <select class="selectpicker" multiple data-live-search="true" name="expert"  id = "Expert">
 
                 <optgroup label="Web Development">
-                    <option value="JQuery">jQuery</option>
-                    <option value="Bootstrap">Bootstrap</option>
-                    <option value="HTML">HTML</option>
-                    <option value="CSS">CSS</option>
-                    <option value="Angular">Angular</option>
+                    <option id="JQuery" value="JQuery">jQuery</option>
+                    <option  id="Bootstrap" value="Bootstrap">Bootstrap</option>
+                    <option  id=HTML" value="HTML">HTML</option>
+                    <option id="CSS"  value="CSS">CSS</option>
+                    <option id="Angular" value="Angular">Angular</option>
                 </optgroup>
                 <optgroup label="Programming Languages">
-                    <option value="java">Java</option>
-                    <option value="csharp">C#</option>
-                    <option value="Python">Python</option>
+                    <option id="java" value="java">Java</option>
+                    <option id="csharp" value="csharp">C#</option>
+                    <option id="Python" value="Python">Python</option>
                 </optgroup>
                 <optgroup label="Databases">
-                    <option value="MySql">MySQL</option>
-                    <option value="Oracle">Oracle</option>
+                    <option id="MySql"  value="MySql">MySQL</option>
+                    <option id="Oracle" value="Oracle">Oracle</option>
 
                 </optgroup>
             </select>
         </div>
         <div class="col-md-12 mt-3">
             <h5> you are intermediate  on :</h5>
-            <select class="selectpicker" multiple data-live-search="true" name="intermdiate"  required>
+            <select class="selectpicker" multiple data-live-search="true" name="intermdiate" id = "Intermediate">
 
                 <optgroup label="Web Development">
-                    <option value="JQuery">jQuery</option>
-                    <option value="Bootstrap">Bootstrap</option>
-                    <option value="HTML">HTML</option>
-                    <option value="CSS">CSS</option>
-                    <option value="Angular">Angular</option>
+                    <option id="JQuery" value="JQuery">jQuery</option>
+                    <option  id="Bootstrap" value="Bootstrap">Bootstrap</option>
+                    <option  id=HTML" value="HTML">HTML</option>
+                    <option id="CSS"  value="CSS">CSS</option>
+                    <option id="Angular" value="Angular">Angular</option>
                 </optgroup>
                 <optgroup label="Programming Languages">
-                    <option value="java">Java</option>
-                    <option value="csharp">C#</option>
-                    <option value="Python">Python</option>
+                    <option id="java" value="java">Java</option>
+                    <option id="csharp" value="csharp">C#</option>
+                    <option id="Python" value="Python">Python</option>
                 </optgroup>
                 <optgroup label="Databases">
-                    <option value="MySql">MySQL</option>
-                    <option value="Oracle">Oracle</option>
+                    <option id="MySql"  value="MySql">MySQL</option>
+                    <option id="Oracle" value="Oracle">Oracle</option>
+
                 </optgroup>
             </select>
         </div>
         <div class="col-md-12 mt-3">
             <h5> you want to learn :</h5>
-            <select class="selectpicker" multiple data-live-search="true" name="noob" required >
+            <select class="selectpicker" multiple data-live-search="true" name="noob" id ="Beginner">
 
                 <optgroup label="Web Development">
-                    <option value="JQuery">jQuery</option>
-                    <option value="Bootstrap">Bootstrap</option>
-                    <option value="HTML">HTML</option>
-                    <option value="CSS">CSS</option>
-                    <option value="Angular">Angular</option>
+                    <option id="JQuery" value="JQuery">jQuery</option>
+                    <option  id="Bootstrap" value="Bootstrap">Bootstrap</option>
+                    <option  id=HTML" value="HTML">HTML</option>
+                    <option id="CSS"  value="CSS">CSS</option>
+                    <option id="Angular" value="Angular">Angular</option>
                 </optgroup>
                 <optgroup label="Programming Languages">
-                    <option value="java">Java</option>
-                    <option value="csharp">C#</option>
-                    <option value="Python">Python</option>
+                    <option id="java" value="java">Java</option>
+                    <option id="csharp" value="csharp">C#</option>
+                    <option id="Python" value="Python">Python</option>
                 </optgroup>
                 <optgroup label="Databases">
-                    <option value="MySql">MySQL</option>
-                    <option value="Oracle">Oracle</option>
+                    <option id="MySql"  value="MySql">MySQL</option>
+                    <option id="Oracle" value="Oracle">Oracle</option>
 
                 </optgroup>
             </select>
@@ -187,6 +187,13 @@
             document.getElementById("age").value = age;
         }
     });
+
+
+     $("select option[value='<%= gender %>']").attr("selected","selected");
+ <% if (language){ language.forEach(function (lang){   if (lang.skl_level === "Expert") {count=(Math.floor(Math.random() * 10 +90));} else if (lang.skl_level==='Intermediate') {count= (Math.floor(Math.random() * 20)+40);} else {count= Math.floor(Math.random() * 10);}  %>
+
+    $("#<%=lang.skl_level   %>   option[value='<%= lang.skl_name %>']").attr("selected","selected");
+    <% })};%>
 </script>
 </body>
 </html>

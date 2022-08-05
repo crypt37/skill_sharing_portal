@@ -19,82 +19,60 @@
 </head>
 
 <body>
-
-
 <form action="/workshop" method="POST" class="requires-validation">
 
-    <h1>Sign Up</h1>
+    <h1><%= language %></h1>
 
     <fieldset>
         <legend><span class="number">1</span>  worshop  info</legend>
         <label for="Venue">Venue:</label>
         <input type="text" name="Venue" placeholder="Venue" required>
+
         <div ><label for="birth_date"> Worshop Date: </label>
+            <div id="ages"  style=" padding-bottom: 0.3em" > </div>
 
-            <input type="text"  name="dob" id="birth_date" required /></div>
+            <input type="hidden" name="age" id = 'age' placeholder="age" />
 
+            <input type="text"   name="dob" id="birth_date" required /></div>
 
-
-
+           <input type="hidden"  id = "work_lang" name="work_lang" value="<%= language  %>"  >
         <label for="name">A short descripttion about worshop  (max 50 ):</label>
 
         <input type="text" id="About" name="About" required
                minlength="1" maxlength="50" size="10">
 
+
+
     </fieldset>
-  <button><a href="/tin:Learners">Learners</a> </button>
 
     <button type="submit">Sign Up</button>
 
 </form>
 <script>
-    function checkDuplicates(){
-        var codes = $('select[class^="selectpicker"]').map(function(element){
-            window.alert;
-            return element.value;
-        })
-        var duplicates = codes.some(function(element, index, self){
-            return element && codes.indexOf(element) !== index;
-        });
-        return duplicates;
-    }
 
-    function flagDuplicates(){
-        var inputs = $('select[class^="selectpicker"]').toArray();
-        var codes = inputs.map(function(element){
-            return element.value;
-        });
-        var duplicates = 0;
-        codes.forEach(function(element, index){
-            var duplicate = element && codes.indexOf(element) !== index;
-            if(duplicate){
-                alert(inputs[index].value+ "  is a duplicate item " );
 
-                inputs[index].value = false;
-                duplicates++
-            }
-        });
-        return duplicates;
-    }
-    $('select[class^="selectpicker"]').on("change", function(){
 
-        flagDuplicates();
-    });
 
+
+    const now = new Date();
     function calculateAge(date)
     {
-        const now = new Date();
+
         const diff = Math.abs(now - date );
-        const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
-        return age
+        const age = Math.floor(diff / (1000 * 60 * 60 * 24 ));
+        return age+1
     }
-    const ima = new Date();
+
     var picker = new Pikaday({
         field: document.getElementById('birth_date') ,
-        yearRange:[ima,2023],
+        yearRange:[now,now+1],
         onSelect: function(date) {
+            if (now-date >0){
+                alert("The workshop should occour in near future ");
+                document.getElementById("birth_date").value ='';
+            }
             let age = calculateAge(date);
-            document.getElementById('ages').innerHTML = "age: "+age ;
+            document.getElementById('ages').innerHTML = "workshop in  : "+ age +" days " ;
             document.getElementById("age").value = age;
         }
     });
